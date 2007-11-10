@@ -8,7 +8,7 @@
     <initial-install-p>f</initial-install-p>
     <singleton-p>f</singleton-p>
 
-    <version name="0.2d" url="http://openacs.org/repository/download/apm/simple-survey-0.2d.apm">
+    <version name="0.3" url="http://openacs.org/repository/download/apm/simple-survey-0.2d.apm">
     <database-support>
         <database>oracle</database>
         <database>postgresql</database>
@@ -21,7 +21,7 @@
 In general survey is a better choice than simple-survey.
 </description>
 
-        <provides url="simple-survey" version="0.2"/>
+        <provides url="simple-survey" version="0.3"/>
         <requires url="acs-kernel" version="5.0d13"/>
 
         <parameters>
