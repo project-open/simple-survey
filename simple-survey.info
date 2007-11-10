@@ -21,6 +21,7 @@
 In general survey is a better choice than simple-survey.
 </description>
 
+        <provides url="simple-survey" version="0.2"/>
         <requires url="acs-kernel" version="5.0d13"/>
 
         <parameters>
