@@ -13,27 +13,35 @@ ad_library {
 
 }
 
-proc_doc survsimp_question_display { question_id {edit_previous_response_p "f"} } "Returns a string of HTML to display for a question, suitable for embedding in a form. The form variable is of the form \"response_to_question.\$question_id" {
+proc_doc survsimp_question_display { 
+    question_id 
+    {edit_previous_response_p "f"} 
+} "
+	Returns a string of HTML to display for a question, 
+	suitable for embedding in a form. 
+	The form variable is of the form \"response_to_question.\$question_id
+" {
     set element_name "response_to_question.$question_id"
 
     db_1row survsimp_question_properties "
-select
-  survey_id,
-  sort_key,
-  question_text,
-  abstract_data_type,
-  required_p,
-  active_p,
-  presentation_type,
-  presentation_options,
-  presentation_alignment,
-  creation_user,
-  creation_date
-from
-  survsimp_questions, acs_objects
-where
-  object_id = question_id
-  and question_id = :question_id"
+	select
+	  survey_id,
+	  sort_key,
+	  question_text,
+	  abstract_data_type,
+	  required_p,
+	  active_p,
+	  presentation_type,
+	  presentation_options,
+	  presentation_alignment,
+	  creation_user,
+	  creation_date
+	from
+	  survsimp_questions, acs_objects
+	where
+	  object_id = question_id
+	  and question_id = :question_id
+    "
     
     set html $question_text
     if { $presentation_alignment == "below" } {
@@ -47,26 +55,31 @@ where
     if {$edit_previous_response_p == "t"} {
  	set user_id [ad_get_user_id]
 
- 	set prev_response_query "select	
-	  choice_id,
-	  boolean_answer,
-	  clob_answer,
-	  number_answer,
- 	  varchar_answer,
-	  date_answer,
-          attachment_file_name
-   	  from survsimp_question_responses
- 	  where question_id = :question_id
-             and response_id = (select max(response_id) from survsimp_responses r, survsimp_questions q, acs_objects
-   	                       where q.question_id = :question_id
-                                 and object_id = r.survey_id
-                       	         and creation_user = :user_id
- 	                         and q.survey_id = r.survey_id)"
+ 	set prev_response_query "
+	select	
+		choice_id,
+		boolean_answer,
+		clob_answer,
+		number_answer,
+ 		varchar_answer,
+		date_answer,
+        	attachment_file_name
+   	from	survsimp_question_responses
+ 	where
+		question_id = :question_id
+		and response_id = (
+			select max(response_id) 
+			from survsimp_responses r, survsimp_questions q, acs_objects
+   	                where	q.question_id = :question_id
+                        	and object_id = r.survey_id
+                       		and creation_user = :user_id
+ 	                	and q.survey_id = r.survey_id
+		)
+	"
 
 	set count 0
 	db_foreach survsimp_response $prev_response_query {
 	    incr count
-	    
 	    if {$presentation_type == "checkbox"} {
 		set selected_choices($choice_id) "t"
 	    }
@@ -125,24 +138,28 @@ where
 		    set user_value $boolean_answer
 		}
 
-		append html "<select name=$element_name>
- <option value=\"\">Select One</option>
- <option value=\"t\" [ad_decode $user_value "t" "selected" ""]>True</option>
- <option value=\"f\" [ad_decode $user_value "f" "selected" ""]>False</option>
-</select>
-"
+		append html "
+		<select name=$element_name>
+		 <option value=\"\">Select One</option>
+		 <option value=\"t\" [ad_decode $user_value "t" "selected" ""]>True</option>
+		 <option value=\"f\" [ad_decode $user_value "f" "selected" ""]>False</option>
+		</select>
+		"
 	    } else {
 		if {$edit_previous_response_p == "t"} {
 		    set user_value $choice_id
 		}
 
-		append html "<select name=$element_name>
-<option value=\"\">Select One</option>\n"
-		db_foreach survsimp_question_choices "select choice_id, label
-from survsimp_question_choices
-where question_id = :question_id
-order by sort_order" {
-		
+		append html "
+		<select name=$element_name>
+		<option value=\"\">Select One</option>
+		"
+		db_foreach survsimp_question_choices "
+			select choice_id, label
+			from survsimp_question_choices
+			where question_id = :question_id
+			order by sort_order
+		" {
 		    if { $user_value == $choice_id } {
 			append html "<option value=$choice_id selected>$label</option>\n"
 		    } else {
@@ -167,10 +184,12 @@ order by sort_order" {
 		}
 		
 		set choices [list]
-		db_foreach sursimp_question_choices_2 "select choice_id, label
-from survsimp_question_choices
-where question_id = :question_id
-order by sort_order" {
+		db_foreach sursimp_question_choices_2 "
+			select choice_id, label
+			from survsimp_question_choices
+			where question_id = :question_id
+			order by sort_order
+		" {
 		    if { $user_value == $choice_id } {
 			lappend choices "<input type=radio name=$element_name value=$choice_id checked> $label"
 		    } else {
@@ -187,9 +206,11 @@ order by sort_order" {
 
 	"checkbox" {
 	    set choices [list]
-	    db_foreach sursimp_question_choices_3 "select * from survsimp_question_choices
-where question_id = :question_id
-order by sort_order" {
+	    db_foreach sursimp_question_choices_3 "
+		select * from survsimp_question_choices
+		where question_id = :question_id
+		order by sort_order
+	    " {
 
 		if { [info exists selected_choices($choice_id)] } {
 		    lappend choices "<input type=checkbox name=$element_name value=$choice_id checked> $label"

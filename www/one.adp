@@ -14,7 +14,7 @@
         
         <tr>
           <td class="tabledata">
-            <%= [export_form_vars survey_id] %>
+            <%= [export_form_vars survey_id related_object_id] %>
             <include src=one_@display_type;noquote@ questions=@questions;noquote@>
             <hr noshapde size="1" color="#dddddd">
               <input type=submit value="Continue">

@@ -16,6 +16,7 @@ ad_page_contract {
 } {
 
   survey_id:integer,notnull
+  { related_object_id:integer "" }
   return_url:optional
   response_to_question:array,optional,multiple,html
 
@@ -144,6 +145,12 @@ db_transaction {
 	    );
 	end;
     }
+   
+    db_dml update_oid "
+	update survsimp_responses set
+		related_object_id = :related_object_id
+	where response_id = :response_id
+    "
 
     set question_info_list [db_list_of_lists survsimp_question_info_list {
         select question_id, question_text, abstract_data_type, presentation_type, required_p

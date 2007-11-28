@@ -10,8 +10,9 @@ ad_page_contract {
     @cvs-id $Id$
 
 } {
-    
+  
     survey_id:integer,notnull
+    { related_object_id:integer "" }
     return_url:optional
 
 } -validate {
@@ -23,7 +24,6 @@ ad_page_contract {
 	}
     }
 } -properties {
-
     name:onerow
     survey_id:onerow
     button_label:onerow
@@ -98,6 +98,7 @@ db_foreach question_ids_select {
 if ![info exists return_url] {
     set return_url {}
 }
+
 
 db_release_unused_handles
 
