@@ -128,6 +128,7 @@ ad_require_permission $survey_id survsimp_take_survey
 
 set user_id [ad_verify_and_get_user_id]
 
+
 # Do the inserts.
 
 set response_id [db_nextval acs_object_id_seq]
@@ -153,10 +154,10 @@ db_transaction {
     "
 
     set question_info_list [db_list_of_lists survsimp_question_info_list {
-        select question_id, question_text, abstract_data_type, presentation_type, required_p
-	from survsimp_questions
-	where survey_id = :survey_id
-	and active_p = 't'
+        select	question_id, question_text, abstract_data_type, presentation_type, required_p
+	from	survsimp_questions
+	where	survey_id = :survey_id
+		and active_p = 't'
 	order by sort_key }]
 
 
