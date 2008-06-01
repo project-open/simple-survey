@@ -4,6 +4,7 @@
 
     <table border="0" cellpadding="0" cellspacing="0" width="100%">
       <form enctype=multipart/form-data method="post" action="process-response">
+	<%= [export_form_vars return_url ] %>
         <tr>
           <td class="tabledata">@description;noquote@</td>
         </tr>
