@@ -17,6 +17,7 @@ ad_page_contract {
 
   survey_id:integer,notnull
   { related_object_id:integer "" }
+  { related_context_id:integer "" }
   return_url:optional
   response_to_question:array,optional,multiple,html
 
@@ -149,7 +150,8 @@ db_transaction {
    
     db_dml update_oid "
 	update survsimp_responses set
-		related_object_id = :related_object_id
+		related_object_id = :related_object_id,
+		related_context_id = :related_context_id
 	where response_id = :response_id
     "
 

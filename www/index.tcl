@@ -9,6 +9,7 @@ ad_page_contract {
     @cvs-id  $Id$
 } {
     related_object_id:integer,optional
+    related_context_id:integer,optional
     { return_url "" }
 } -properties {
     surveys:multirow
@@ -29,7 +30,7 @@ db_multirow -extend {survey_url} surveys survey_select {
     and enabled_p = 't'
     order by upper(name)
 } {
-    set survey_url [export_vars -base "one" {survey_id related_object_id return_url}]
+    set survey_url [export_vars -base "one" {survey_id related_object_id related_context_id return_url}]
 }
 
 db_release_unused_handles
