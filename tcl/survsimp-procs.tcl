@@ -142,7 +142,7 @@ proc_doc survsimp_question_display {
 		
 		append html "
 		<select name=$element_name>
-		 <option value=\"\">Select One</option>
+		 <option value=\"\">[lang::message::lookup "" simple-survey.Select_One "Select One"]</option>
 		 <option value=\"t\" [ad_decode $user_value "t" "selected" ""]>True</option>
 		 <option value=\"f\" [ad_decode $user_value "f" "selected" ""]>False</option>
 		</select>
@@ -154,7 +154,7 @@ proc_doc survsimp_question_display {
 		
 		append html "
 		<select name=$element_name>
-		<option value=\"\">Select One</option>
+		<option value=\"\">[lang::message::lookup "" simple-survey.Select_One "Select One"]</option>
 		"
 		db_foreach survsimp_question_choices "
 			select choice_id, label
