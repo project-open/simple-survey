@@ -17,6 +17,7 @@ ad_page_contract {
     @cvs-id $Id$
 } {
     survey_id:integer,notnull
+    { response_id:integer "" }
     { related_object_id:integer "" }
     { related_context_id:integer "" }
     return_url:optional
@@ -129,10 +130,13 @@ ad_page_contract {
 ad_require_permission $survey_id survsimp_take_survey
 
 set user_id [ad_verify_and_get_user_id]
-
-
-set response_id [db_nextval acs_object_id_seq]
 set creation_ip [ad_conn peeraddr]
+
+set create_response_p 0
+if {"" == $response_id} { 
+    set response_id [db_nextval acs_object_id_seq] 
+    set create_response_p 1
+}
 
 
 # -----------------------------------------------------
@@ -160,6 +164,7 @@ if {"" != $task_id} {
 
 db_transaction {
 
+    if {$create_response_p} {
     db_exec_plsql create_response {
 	begin
 	    :1 := survsimp_response.new (
@@ -170,6 +175,7 @@ db_transaction {
 	    );
 	end;
     }
+    }
    
     db_dml update_oid "
 	update survsimp_responses set
@@ -178,12 +184,22 @@ db_transaction {
 	where response_id = :response_id
     "
 
-    set question_info_list [db_list_of_lists survsimp_question_info_list {
-        select	question_id, question_text, abstract_data_type, presentation_type, required_p
+    if {!$create_response_p} {
+	# Delete old answers
+	db_dml delete_old_response "delete from survsimp_question_responses where response_id = :response_id"
+    }
+
+    set question_info_list [db_list_of_lists survsimp_question_info_list "
+        select	question_id, 
+		question_text, 
+		abstract_data_type, 
+		presentation_type, 
+		required_p
 	from	survsimp_questions
 	where	survey_id = :survey_id
 		and active_p = 't'
-	order by sort_key }]
+	order by sort_key
+    "]
 
 
     foreach question $question_info_list { 
@@ -204,29 +220,34 @@ db_transaction {
 			    set response_value [db_null]
 			}
 
-			db_dml survsimp_question_response_checkbox_insert "insert into survsimp_question_responses (response_id, question_id, choice_id)
- values (:response_id, :question_id, :response_value)"
+			db_dml survsimp_question_response_checkbox_insert "
+				insert into survsimp_question_responses (response_id, question_id, choice_id)
+				values (:response_id, :question_id, :response_value)
+			"
 		    }
 		}  else {
 		    if { [empty_string_p $response_value] } {
 			set response_value [db_null]
 		    }
 
-		    db_dml survsimp_question_response_choice_insert "insert into survsimp_question_responses (response_id, question_id, choice_id)
- values (:response_id, :question_id, :response_value)"
+		    db_dml survsimp_question_response_choice_insert "
+		    	   insert into survsimp_question_responses (response_id, question_id, choice_id)
+			   values (:response_id, :question_id, :response_value)"
 		}
 	    }
 	    "shorttext" {
-		db_dml survsimp_question_choice_shorttext_insert "insert into survsimp_question_responses (response_id, question_id, varchar_answer)
- values (:response_id, :question_id, :response_value)"
+		db_dml survsimp_question_choice_shorttext_insert "
+		       insert into survsimp_question_responses (response_id, question_id, varchar_answer)
+		       values (:response_id, :question_id, :response_value)"
 	    }
 	    "boolean" {
 		if { [empty_string_p $response_value] } {
 		    set response_value [db_null]
 		}
 
-		db_dml survsimp_question_response_boolean_insert "insert into survsimp_question_responses (response_id, question_id, boolean_answer)
- values (:response_id, :question_id, :response_value)"
+		db_dml survsimp_question_response_boolean_insert "
+		       insert into survsimp_question_responses (response_id, question_id, boolean_answer)
+		       values (:response_id, :question_id, :response_value)"
 	    }
 	    "number" {}
 	    "integer" {
@@ -234,8 +255,9 @@ db_transaction {
                     set response_value [db_null]
                 } 
 
-		db_dml survsimp_question_response_integer_insert "insert into survsimp_question_responses (response_id, question_id, number_answer)
- values (:response_id, :question_id, :response_value)"
+		db_dml survsimp_question_response_integer_insert "
+		       insert into survsimp_question_responses (response_id, question_id, number_answer)
+		        values (:response_id, :question_id, :response_value)"
 	    }
 	    "text" {
                 if { [empty_string_p $response_value] } {
@@ -246,18 +268,19 @@ db_transaction {
 		set clob_answer $response_value
 
 		db_dml survsimp_question_response_text_insert "
-insert into survsimp_question_responses
-(response_id, question_id, clob_answer)
-values (:response_id, :question_id, empty_clob())
- returning clob_answer into :1" -clobs [list $response_value]
+		       insert into survsimp_question_responses (response_id, question_id, clob_answer)
+		       values (:response_id, :question_id, empty_clob())
+		        returning clob_answer into :1
+		" -clobs [list $response_value]
 	    }
 	    "date" {
                 if { [empty_string_p $response_value] } {
                     set response_value [db_null]
                 }
 
-		db_dml survsimp_question_response_date_insert "insert into survsimp_question_responses (response_id, question_id, date_answer)
- values (:response_id, :question_id, :response_value)"
+		db_dml survsimp_question_response_date_insert "
+		       insert into survsimp_question_responses (response_id, question_id, date_answer)
+		       values (:response_id, :question_id, :response_value)"
 	    }   
             "blob" {
                 if { ![empty_string_p $response_value] } {

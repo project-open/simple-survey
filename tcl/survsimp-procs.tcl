@@ -17,6 +17,7 @@ ad_library {
 proc_doc survsimp_question_display { 
     question_id 
     {edit_previous_response_p "f"} 
+    {previous_response_id ""}
 } "
 	Returns a string of HTML to display for a question, 
 	suitable for embedding in a form. 
@@ -78,6 +79,23 @@ proc_doc survsimp_question_display {
  				and q.survey_id = r.survey_id
 		)
 	"
+
+	if {"" != $previous_response_id} {
+	    # We are editing an explicitely given response
+	    set prev_response_query "
+		select	choice_id,
+			boolean_answer,
+			clob_answer,
+			number_answer,
+	 		varchar_answer,
+			date_answer,
+			attachment_file_name
+	   	from	survsimp_question_responses
+	 	where	question_id = :question_id
+			and response_id = :previous_response_id
+	    "
+	}
+
 
 	set count 0
 	db_foreach survsimp_response $prev_response_query {

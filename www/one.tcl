@@ -16,6 +16,7 @@ if {![info exists task]} {
 	
     } {
 	survey_id:integer,notnull
+	{ response_id:integer "" }
 	{ related_object_id:integer "" }
 	{ related_context_id:integer "" }
 	return_url:optional
@@ -62,6 +63,8 @@ if {![info exists task]} {
     if {![info exists return_url]} { set return_url [im_url_with_query] }
     set message ""
 
+    set response_id ""
+
     # Determine the simple-survey from the "Header" of the panel.
     # This is not the intended use of the "Header", but comes in very handy.
     set wf_panel_header [db_string panel_header "
@@ -97,8 +100,8 @@ if {![info exists task]} {
 ad_require_permission $survey_id survsimp_take_survey
 
 set user_id [ad_maybe_redirect_for_registration]
-
 set package_url "/simple-survey"
+
 
 db_1row survey_info "select name, description, single_response_p, single_editable_p, display_type
     from survsimp_surveys where survey_id = :survey_id"
@@ -138,9 +141,13 @@ if {$single_response_p == "t" && $single_editable_p == "f"} {
     set modification_allowed_p "t"
 }
 
+if {"" != $response_id} {
+    set edit_previous_response_p "t"
+}
+
+
 # build a list containing the HTML (generated with survsimp_question_display) for each question
 set rownum 0
-
 set questions [list]
 
 db_foreach question_ids_select {
@@ -150,7 +157,7 @@ db_foreach question_ids_select {
     and active_p = 't'
     order by sort_key
 } {
-    lappend questions [survsimp_question_display $question_id $edit_previous_response_p]
+    lappend questions [survsimp_question_display $question_id $edit_previous_response_p $response_id]
 }
 
 # return_url is used for infoshare - if it is set
