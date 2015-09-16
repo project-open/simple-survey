@@ -15,17 +15,15 @@ ad_page_contract {
   @cvs-id $Id$
 
 } {
-
-  survey_id:integer,optional
-  name
-  description:allhtml
-  desc_html
-  {checked_p "f"}
-  type:notnull
-  {display_type "list"}
-  {variable_names ""}
-  {logic:allhtml ""}
-
+    survey_id:integer,optional
+    name
+    description:allhtml
+    desc_html
+    {checked_p "f"}
+    type:notnull
+    {display_type "list"}
+    {variable_names ""}
+    {logic:allhtml ""}
 }
 
 set package_id [ad_conn package_id]
@@ -134,9 +132,6 @@ if {$checked_p == "f"} {
 	    }
 
 	    set logic_id [db_string next_logic_id "select survsimp_logic_id_sequence.nextval from dual"]
-	
-	    ### added to support postgresql
-	    ### oracle query also edited
 	    db_dml add_logic "insert into survsimp_logic
               (logic_id, logic)
               values

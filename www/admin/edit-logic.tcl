@@ -29,20 +29,21 @@ if { $exception_count > 0 } {
 }
 
 # get the existing logic
-
 set survey_name [db_string set_survey_name "select name from survsimp_surveys where survey_id = :survey_id"]
 
-db_1row get_logic "select logic, survsimp_logic.logic_id from survsimp_logic, survsimp_logic_surveys_map
-where survsimp_logic.logic_id = survsimp_logic_surveys_map.logic_id
-and survey_id = :survey_id"
-
+db_1row get_logic "
+	select	logic, 
+		survsimp_logic.logic_id
+	from	survsimp_logic, 
+		survsimp_logic_surveys_map
+	where	survsimp_logic.logic_id = survsimp_logic_surveys_map.logic_id and
+		survey_id = :survey_id
+"
 db_release_unused_handles
 
 doc_return 200 text/html "[ad_header "Edit Survey Logic"]
 <h2>$survey_name</h2>
-
 [ad_context_bar [list "./" "Simple Survey Admin"] [list "one?[export_url_vars survey_id]" "Administer Survey"] "Edit Logic"]
-    
 <hr>
 
 <form method=post action=\"edit-logic-2\">
