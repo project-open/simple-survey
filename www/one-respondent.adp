@@ -14,7 +14,7 @@
       </multiple>
       <p>
         <multiple name=responses>
-          <table width=100% cellpadding=2 cellspacing=2 border=0>
+          <table width="100%" cellpadding=2 cellspacing=2 border=0>
             <tr bgcolor=#e6e6e6>
               <td><a name="@responses.submission_date@">Your response on @responses.pretty_submission_date@</a></td>
             </tr>
