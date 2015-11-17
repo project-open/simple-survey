@@ -18,7 +18,7 @@ ad_page_contract {
 
 ad_require_permission $survey_id survsimp_admin_survey
 
-set user_id [ad_get_user_id]
+set user_id [ad_conn user_id]
 
 # nstrug - 12/9/2000
 # Summarise scored responses for all users

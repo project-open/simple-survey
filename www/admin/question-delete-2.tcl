@@ -15,7 +15,7 @@ ad_page_contract {
 
 ad_require_permission $question_id survsimp_delete_question
 
-set user_id [ad_get_user_id]
+set user_id [ad_conn user_id]
 
 set survey_id [db_string survsimp_survey_id_from_question_id "select survey_id from survsimp_questions where question_id = :question_id" ]
 survsimp_survey_admin_check $user_id $survey_id

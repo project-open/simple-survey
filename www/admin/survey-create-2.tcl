@@ -31,7 +31,7 @@ set package_id [ad_conn package_id]
 # bounce the user if they don't have permission to admin surveys
 ad_require_permission $package_id survsimp_create_survey
 
-set user_id [ad_get_user_id]
+set user_id [ad_conn user_id]
 
 set short_name [string range $name 0 99]
 

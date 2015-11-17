@@ -14,7 +14,7 @@ ad_page_contract {
   question_id:integer,notnull
 
 }
-set user_id [ad_get_user_id]
+set user_id [ad_conn user_id]
 
 db_1row one_question "
   select question_text, survey_id

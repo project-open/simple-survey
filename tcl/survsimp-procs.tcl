@@ -55,7 +55,7 @@ proc_doc survsimp_question_display {
     set user_value ""
 
     if {$edit_previous_response_p == "t"} {
- 	set user_id [ad_get_user_id]
+ 	set user_id [ad_conn user_id]
 
  	set prev_response_query "
 	select	
