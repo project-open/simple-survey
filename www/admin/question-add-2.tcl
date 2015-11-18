@@ -93,7 +93,7 @@ if { $type == "scored" } {
     append response_fields "</table>\n"
     set response_type_html "<input type=hidden name=abstract_data_type value=\"choice\">"
     set presentation_options_html ""
-    set form_var_list [export_form_vars survey_id question_id question_text presentation_type after required_p active_p type n_variables variable_id_list]
+    set form_var_list [export_vars -form {survey_id question_id question_text presentation_type after required_p active_p type n_variables variable_id_list}]
 
 } elseif { $type == "general" } {
 
@@ -175,7 +175,7 @@ Type of Response:
 	}
     }
 
-set form_var_list [export_form_vars survey_id question_id question_text presentation_type after required_p active_p type]
+    set form_var_list [export_vars -form {survey_id question_id question_text presentation_type after required_p active_p type}]
 
 }
 

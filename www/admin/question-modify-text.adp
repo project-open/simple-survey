@@ -3,7 +3,7 @@
 <property name="context">@context;noquote@</property>
 
 <form action="question-modify-text-2" method=GET>
-<%= [export_form_vars question_id survey_id] %>
+<%= [export_vars -form {question_id survey_id}] %>
 Question:
 <blockquote>
 <textarea name=question_text rows=5 cols=70><%= [ns_quotehtml $question_text] %></textarea>

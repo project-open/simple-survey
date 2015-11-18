@@ -5,7 +5,7 @@
 <blockquote>
 Edit and submit to change the name for this survey:
 <form method=post action="name-edit-2">
-<%= [export_form_vars survey_id] %>
+<%= [export_vars -form {survey_id}] %>
 <INPUT TYPE=text name=name value="@survey_name@" size=80>
 <br>
 

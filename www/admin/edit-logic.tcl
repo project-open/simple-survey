@@ -47,7 +47,7 @@ doc_return 200 text/html "[ad_header "Edit Survey Logic"]
 <hr>
 
 <form method=post action=\"edit-logic-2\">
-[export_form_vars logic_id survey_id]
+[export_vars -form {logic_id survey_id}]
 Logic:
 <blockquote>
 <textarea name=logic wrap=off rows=20 cols=65>$logic</textarea>

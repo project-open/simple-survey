@@ -9,7 +9,7 @@ Here is how your survey description will appear:
 </p>
 
 <form method=post action="<%= [ns_conn url] %>">
-    <%= [export_form_vars survey_id name description desc_html type variable_names logic] %>
+    <%= [export_vars -form {survey_id name description desc_html type variable_names logic}] %>
     <input type=hidden name=checked_p value="t">
     <br><center><input type=submit value="Confirm"></center>
     </form>

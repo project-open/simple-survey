@@ -5,7 +5,7 @@
 <blockquote>
 
 <form method=post action="survey-create-2">
-<%= [ad_export_vars -form type] %>
+<%= [export_vars -form {type}] %>
 <p>
 
 Survey Name:  <input type=text name=name value="@name@" size=41 maxlength=40>

@@ -3,7 +3,7 @@
 <property name="context">@context;noquote@</property>
 
 <form action="question-add-2" method=post>
-<%= [export_form_vars survey_id after] %>
+<%= [export_vars -form {survey_id after}] %>
 
 Question:
 <blockquote>

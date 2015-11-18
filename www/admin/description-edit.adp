@@ -5,7 +5,7 @@
 <blockquote>
 Edit and submit to change the description for this survey:
 <form method=post action="description-edit-2">
-<%= [export_form_vars survey_id] %>
+<%= [export_vars -form {survey_id}] %>
 <textarea name=description rows=10 cols=65>@description@</textarea>  
 <br>
 The description above is:

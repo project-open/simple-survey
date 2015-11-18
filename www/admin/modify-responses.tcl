@@ -72,7 +72,7 @@ doc_return 200 text/html "[ad_header "Modify Responses"]
 Question: $question_text
 <p>
 <form action=\"modify-responses-2\" method=get>
-[export_form_vars survey_id question_id choice_id_list variable_id_list]
+[export_vars -form {survey_id question_id choice_id_list variable_id_list}]
 $table_html
 <p>
 <center>

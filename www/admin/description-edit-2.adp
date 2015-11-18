@@ -6,7 +6,7 @@ Here is how your survey description will appear:
 <blockquote><p>
 @description@
 <form method=post action="<%= [ns_conn url] %>">
-<%= [export_form_vars description desc_html survey_id] %>
+<%= [export_vars -form {description desc_html survey_id}] %>
 <input type=hidden name=checked_p value="t">
 <br><center><input type=submit value="Confirm"></center>
 </form>
