@@ -45,9 +45,9 @@ where
 if {$survey_response_limit == "One"} {
     set response_limit_toggle "allow Multiple"
     if {$survey_editable_single == "Editable"} {
-        set response_editable_link "| Editable: <a href=\"response-editable-toggle?[export_url_vars survey_id]\">make non-editable</a>"
+        set response_editable_link "| Editable: <a href=\"response-editable-toggle?[export_vars -url { survey_id}]\">make non-editable</a>"
     } else {
-	set response_editable_link "| Non-editable: <a href=\"response-editable-toggle?[export_url_vars survey_id]\">make editable</a>"
+	set response_editable_link "| Non-editable: <a href=\"response-editable-toggle?[export_vars -url { survey_id}]\">make editable</a>"
     }
 } else {
     set response_limit_toggle "limit to One"
@@ -55,8 +55,8 @@ if {$survey_response_limit == "One"} {
 }
 
 # allow site-wide admins to enable/disable surveys directly from here
-set target "one?[export_url_vars survey_id]"
-set toggle_enabled_link "\[ <a href=\"survey-toggle?[export_url_vars survey_id enabled_p target]\">"
+set target "one?[export_vars -url {survey_id}]"
+set toggle_enabled_link "\[ <a href=\"survey-toggle?[export_vars -url {survey_id enabled_p target}]\">"
 if {$enabled_p == "t"} {
     append toggle_enabled_link "Disable"
 } else {
@@ -96,7 +96,7 @@ proc survey_specific_question_option_html { type survey_id question_id } {
 	    set return_html ""
 	}
 	"scored" {
-	    set return_html "<a href=\"modify-responses?[export_url_vars survey_id question_id]\">modify responses</a>"
+	    set return_html "<a href=\"modify-responses?[export_vars -url {survey_id question_id}]\">modify responses</a>"
 	}
 	default {
 	    set return_html ""
@@ -112,21 +112,21 @@ where survey_id = :survey_id
 order by sort_key" {
 
 
-    set question_options [list "<a href=\"question-modify-text?[export_url_vars question_id survey_id]\">modify text</a>" "<a href=\"question-delete?question_id=$question_id\">delete</a>" "<a href=\"question-add?[export_url_vars survey_id]&after=$sort_key\">add new question</a>"]
+    set question_options [list "<a href=\"question-modify-text?[export_vars -url {question_id survey_id}]\">modify text</a>" "<a href=\"question-delete?question_id=$question_id\">delete</a>" "<a href=\"question-add?[export_vars -url {survey_id}]&after=$sort_key\">add new question</a>"]
 
     if { $count > 0 } {
-	lappend question_options "<a href=\"question-swap?[export_url_vars survey_id sort_key]\">swap with prev</a>"
+	lappend question_options "<a href=\"question-swap?[export_vars -url {survey_id sort_key}]\">swap with prev</a>"
     }
 
     if {$active_p == "t"} {
-	lappend question_options "Active: <a href=\"question-active-toggle?[export_url_vars survey_id question_id active_p]\">inactivate</a>"
+	lappend question_options "Active: <a href=\"question-active-toggle?[export_vars -url { survey_id question_id active_p}]\">inactivate</a>"
 	if {$required_p == "t"} {
-	    lappend question_options "Response Required: <a href=\"question-required-toggle?[export_url_vars survey_id question_id required_p]\">don't require</a>"
+	    lappend question_options "Response Required: <a href=\"question-required-toggle?[export_vars -url { survey_id question_id required_p}]\">don't require</a>"
 	} else {
-	    lappend question_options "Response Not Required: <a href=\"question-required-toggle?[export_url_vars survey_id question_id required_p]\">require</a>"
+	    lappend question_options "Response Not Required: <a href=\"question-required-toggle?[export_vars -url { survey_id question_id required_p}]\">require</a>"
 	}
     } else {
-	lappend question_options "Inactive: <a href=\"question-active-toggle?[export_url_vars survey_id question_id active_p]\">activate</a>"
+	lappend question_options "Inactive: <a href=\"question-active-toggle?[export_vars -url { survey_id question_id active_p}]\">activate</a>"
     }
 
     lappend question_options [survey_specific_question_option_html $type $survey_id $question_id]

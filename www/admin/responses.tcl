@@ -134,7 +134,7 @@ where qr.choice_id = qc.choice_id
   and qr.question_id = :question_id
 group by label, sort_order, qc.choice_id
 order by sort_order" {
-             append results "$label: <a href=\"response-drill-down?[export_url_vars question_id choice_id]\">$n_responses</a><br>\n"
+    append results "$label: <a href=\"response-drill-down?[export_vars -url { question_id choice_id}]\">$n_responses</a><br>\n"
              }
 	 }
     }

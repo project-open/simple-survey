@@ -179,6 +179,6 @@ Type of Response:
 
 }
 
-set context [list [list "one?[export_url_vars survey_id]" "Administer Survey"] "Add A Question"]
+set context [list [list "one?[export_vars -url { survey_id}]" "Administer Survey"] "Add A Question"]
 
 ad_return_template

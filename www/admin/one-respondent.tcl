@@ -47,7 +47,7 @@ set whole_page "[ad_header "Response from $first_names $last_name"]
 
 <hr>
 
-Here is what <a href=\"/shared/community-member?[export_url_vars user_id]\">$first_names $last_name</a> had to say in response to $survey_name:
+Here is what <a href=\"/shared/community-member?[export_vars -url {user_id}]\">$first_names $last_name</a> had to say in response to $survey_name:
 
 <p>
 

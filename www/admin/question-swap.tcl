@@ -29,7 +29,7 @@ db_transaction {
 	where survey_id = :survey_id and sort_key in (:sort_key, :next_sort_key)
     "
 
-    ad_returnredirect "one?[export_url_vars survey_id]"
+    ad_returnredirect "one?[export_vars -url { survey_id}]"
     
 } on_error {
     

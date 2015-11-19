@@ -56,14 +56,14 @@ if { $n_responses == 0 } {
     doc_return 200 text/html "[ad_header "Confirm Question Deletion"]
 <h2>Really Delete?</h2>
 
-[ad_context_bar [list "one?[export_url_vars survey_id]" "Administer Survey"] "Delete Question"]
+[ad_context_bar [list "one?[export_vars -url { survey_id}]" "Administer Survey"] "Delete Question"]
 
 <hr>
 
 Deleting this question will also delete all $n_responses responses. Really delete?
 <p>
-<a href=\"question-delete-2?[export_url_vars question_id]\">Yes</a> / 
-<a href=\"one?[export_url_vars survey_id]\">No</a>
+<a href=\"question-delete-2?[export_vars -url { question_id}]\">Yes</a> / 
+<a href=\"one?[export_vars -url { survey_id}]\">No</a>
 
 [ad_footer]
 "

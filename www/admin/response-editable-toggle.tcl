@@ -20,4 +20,4 @@ db_dml survsimp_response_editable_toggle "update survsimp_surveys set single_edi
 where survey_id = :survey_id"
 
 db_release_unused_handles
-ad_returnredirect "one?[export_url_vars survey_id]"
+ad_returnredirect "one?[export_vars -url { survey_id}]"

@@ -351,7 +351,7 @@ order by sort_key"
 	append return_string [util_show_plain_text "$clob_answer $number_answer $varchar_answer $date_answer"]
 	
 	if {![empty_string_p $attachment_file_name]} {
-		append return_string "Uploaded file: <a href=/survsimp/view-attachment?[export_url_vars response_id question_id]>\"$attachment_file_name\"</a>"
+	    append return_string "Uploaded file: <a href=/survsimp/view-attachment?[export_vars -url {response_id question_id}]>\"$attachment_file_name\"</a>"
 	}
 	
 	if {$choice_id != 0 && ![empty_string_p $choice_id] && $question_id != $question_id_previous} {
@@ -409,7 +409,7 @@ from survsimp_surveys s, $users_table u
 where s.creation_user = u.user_id
 and creation_date> :since_when
 order by creation_date desc" {
-	append new_survey_items "<li><a href=\"/survsimp/admin/one?[export_url_vars survey_id]\">$name</a> ($description) created by <a href=\"/shared/community-member?[export_url_vars user_id]\">$creator_name</a> on $creation_date\n" 
+    append new_survey_items "<li><a href=\"/survsimp/admin/one?[export_vars -url {survey_id}]\">$name</a> ($description) created by <a href=\"/shared/community-member?[export_vars -url {user_id}]\">$creator_name</a> on $creation_date\n" 
 	}
 	
 	if { ![empty_string_p $new_survey_items] } {

@@ -20,4 +20,4 @@ set single_response_p = util.logical_negation(single_response_p)
 where survey_id = :survey_id"
 
 db_release_unused_handles
-ad_returnredirect "one?[export_url_vars survey_id]"
+ad_returnredirect "one?[export_vars -url { survey_id}]"

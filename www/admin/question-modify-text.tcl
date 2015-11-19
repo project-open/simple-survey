@@ -24,4 +24,4 @@ set question_text [db_string survsimp_question_text_from_id "select question_tex
 from survsimp_questions
 where question_id = :question_id" ]
 
-set context [list [list "one?[export_url_vars survey_id]" "Administer Survey"] "Modify a Question's Text"]
+set context [list [list "one?[export_vars -url { survey_id}]" "Administer Survey"] "Modify a Question's Text"]

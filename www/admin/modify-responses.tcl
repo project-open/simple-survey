@@ -65,7 +65,7 @@ db_release_unused_handles
 doc_return 200 text/html "[ad_header "Modify Responses"]
 <h2>$survey_name</h2>
 
-[ad_context_bar [list "one?[export_url_vars survey_id]" "Administer Survey"] "Modify Question Responses"]
+[ad_context_bar [list "one?[export_vars -url {survey_id}]" "Administer Survey"] "Modify Question Responses"]
 
 <hr>
 

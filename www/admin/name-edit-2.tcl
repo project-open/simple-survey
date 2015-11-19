@@ -26,6 +26,6 @@ db_dml survsimp_update_name "update survsimp_surveys
 set name= :name, short_name= :name
 where survey_id = :survey_id"
 
-ad_returnredirect "one?[export_url_vars survey_id]"
+ad_returnredirect "one?[export_vars -url {survey_id}]"
 
 

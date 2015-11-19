@@ -43,7 +43,7 @@ db_release_unused_handles
 
 doc_return 200 text/html "[ad_header "Edit Survey Logic"]
 <h2>$survey_name</h2>
-[ad_context_bar [list "./" "Simple Survey Admin"] [list "one?[export_url_vars survey_id]" "Administer Survey"] "Edit Logic"]
+[ad_context_bar [list "./" "Simple Survey Admin"] [list "one?[export_vars -url {survey_id}]" "Administer Survey"] "Edit Logic"]
 <hr>
 
 <form method=post action=\"edit-logic-2\">

@@ -35,7 +35,7 @@ if {$exception_count > 0} {
 }
 
 if {$checked_p == "f"} {
-    set context [list [list "one?[export_url_vars survey_id]" "Administer Survey"] "Confirm Description"]
+    set context [list [list "one?[export_vars -url {survey_id}]" "Administer Survey"] "Confirm Description"]
 
     switch $desc_html {
 	"t" {
@@ -61,7 +61,7 @@ if {$checked_p == "f"} {
           where survey_id = :survey_id"
 
     db_release_unused_handles
-    ad_returnredirect "one?[export_url_vars survey_id]"
+    ad_returnredirect "one?[export_vars -url {survey_id}]"
     ad_script_abort
 }
 

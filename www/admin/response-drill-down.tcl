@@ -72,7 +72,7 @@ where
   and qr.question_id = :question_id
   and qr.choice_id = :choice_id" {
 
-    append results "<li><a href=\"one-respondent?[export_url_vars user_id survey_id]\">$responder_name</a>\n"
+      append results "<li><a href=\"one-respondent?[export_vars -url { user_id survey_id}]\">$responder_name</a>\n"
 }
 
 

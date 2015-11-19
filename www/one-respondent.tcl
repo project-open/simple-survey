@@ -42,7 +42,7 @@ db_1row survey_info { select name, description
 
 set survey_name $survey(name)
 set description $survey(description)
-set context [list [list "index" "Surveys"] [list "one?[export_url_vars survey_id]" "One survey"] "Responses"]
+set context [list [list "index" "Surveys"] [list "one?[export_vars -url { survey_id}]" "One survey"] "Responses"]
 
 if { ![empty_string_p $group_id] } {
     set limit_to_sql "group_id = :group_id"

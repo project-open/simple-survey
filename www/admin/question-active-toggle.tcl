@@ -21,5 +21,5 @@ where survey_id = :survey_id
 and question_id = :question_id"
 
 db_release_unused_handles
-ad_returnredirect "one?[export_url_vars survey_id]"
+ad_returnredirect "one?[export_vars -url { survey_id}]"
 
