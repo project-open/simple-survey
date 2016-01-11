@@ -118,7 +118,7 @@ if {$checked_p == "f"} {
 
 	    foreach variable_name [split $variable_names ","] {
 	    
-		set variable_id [db_string next_variable_id "select survsimp_variable_id_sequence.nextval from dual"]
+		set variable_id [db_string next_variable_id "select nextval('survsimp_variable_id_seq') from dual"]
 
 		db_dml add_variable_name "insert into survsimp_variables
                   (variable_id, variable_name)
@@ -131,7 +131,7 @@ if {$checked_p == "f"} {
                   (:variable_id, :survey_id)"
 	    }
 
-	    set logic_id [db_string next_logic_id "select survsimp_logic_id_sequence.nextval from dual"]
+	    set logic_id [db_string next_logic_id "select nextval('survsimp_logic_id_seq') from dual"]
 	    db_dml add_logic "insert into survsimp_logic
               (logic_id, logic)
               values

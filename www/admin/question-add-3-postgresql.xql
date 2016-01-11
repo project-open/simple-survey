@@ -27,7 +27,7 @@
  
 <fullquery name="get_choice_id">      
       <querytext>
-      select survsimp_choice_id_sequence.nextval as choice_id 
+      select nextval('survsimp_choice_id_seq') as choice_id from dual
       </querytext>
 </fullquery>
 

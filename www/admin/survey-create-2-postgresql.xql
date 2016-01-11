@@ -27,14 +27,14 @@
  
 <fullquery name="next_variable_id">      
       <querytext>
-      select survsimp_variable_id_sequence.nextval 
+      select nextval('survsimp_variable_id_seq') from dual
       </querytext>
 </fullquery>
 
  
 <fullquery name="next_logic_id">      
       <querytext>
-      select survsimp_logic_id_sequence.nextval 
+      select nextval('survsimp_logic_id_seq') from dual
       </querytext>
 </fullquery>
 

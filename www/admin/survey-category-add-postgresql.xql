@@ -5,8 +5,7 @@
 
 <fullquery name="category_id_next_sequence">      
       <querytext>
-      select 
-  category_id_sequence.nextval 
+      select category_id_sequence.nextval 
       </querytext>
 </fullquery>
 

@@ -126,7 +126,7 @@ if { $type == "scored" } {
 	set count 0
 	foreach response $responses {
 	    set trimmed_response [string trim $response]
-	    set choice_id [db_string get_choice_id "select survsimp_choice_id_sequence.nextval as choice_id from dual"]
+	    set choice_id [db_string get_choice_id "select nextval('survsimp_choice_id_seq') as choice_id from dual"]
 	    db_dml insert_survsimp_question_choice "
 		insert into survsimp_question_choices
                 (choice_id, question_id, label, sort_order)
@@ -226,9 +226,9 @@ if { $type == "scored" } {
 		            continue
 		        }
 		        ### added this next line to 
-	    	        set choice_id [db_string get_choice_id "select survsimp_choice_id_sequence.nextval as choice_id from dual"]
+	    	        set choice_id [db_string get_choice_id "select nextval('survsimp_choice_id_seq') as choice_id from dual"]
 		        db_dml insert_survsimp_question_choice "insert into survsimp_question_choices (choice_id, question_id, label, sort_order)
-values (survsimp_choice_id_sequence.nextval, :question_id, :trimmed_response, :count)"
+values (nextval('survsimp_choice_id_seq'), :question_id, :trimmed_response, :count)"
 		        incr count
 	            }
 	        }
