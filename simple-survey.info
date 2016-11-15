@@ -15,7 +15,7 @@
     </database-support>
         <owner url="mailto:nstrug@redhat.com">Nicholas Strugnell</owner>
         <summary>Ask users questions and record results.</summary>
-        <release-date>2001-02-14</release-date>
+        <release-date>2016-11-15</release-date>
         <vendor url="http://openacs.org">OpenACS</vendor>
         <description format="text/html">Simple survey is a survey builder. Surveys can contain questions with different types of answer several types: multiple choice (radio buttons), multiple answer (checkboxes) or free text entry. Multiple choice questions may also be scored on one or more variables.
 In general survey is a better choice than simple-survey.
