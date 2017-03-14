@@ -419,11 +419,16 @@ order by creation_date desc" {
 	}
 }
 
-ns_share ad_new_stuff_module_list
+# fraber 170314: Not supported by NaviServer
+# I also don't understand what this does, because
+# ad_new_stuff_module_list is not used anywhere else.
+#
+# ns_share ad_new_stuff_module_list
+#
+# if { ![info exists ad_new_stuff_module_list] || [util_search_list_of_lists $ad_new_stuff_module_list "Surveys" 0] == -1 } {
+# 	lappend ad_new_stuff_module_list [list "Surveys" ad_survsimp_new_stuff]
+# }
 
-if { ![info exists ad_new_stuff_module_list] || [util_search_list_of_lists $ad_new_stuff_module_list "Surveys" 0] == -1 } {
-	lappend ad_new_stuff_module_list [list "Surveys" ad_survsimp_new_stuff]
-}
 
 ad_proc -public survsimp_survey_short_name_to_id  {short_name} "Returns the id of the survey
 given the short name" {
