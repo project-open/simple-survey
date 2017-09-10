@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<message_catalog package_key="simple-survey" locale="pl_PL" charset="utf-8">
+
+  <msg key="Fill_out_survey">Proszę wypełnić poniższą ankietę. Dziękuję za współpracę.</msg>
+</message_catalog>
