@@ -154,7 +154,7 @@ if {"" != $task_id} {
 			-assignments {} \
 			$task_id \
 			$the_action \
-		       ]
+    ]
 }
 
 
@@ -201,7 +201,6 @@ db_transaction {
 	order by sort_key
     "]
 
-
     foreach question $question_info_list { 
 	set question_id [lindex $question 0]
 	set question_text [lindex $question 1]
@@ -209,6 +208,8 @@ db_transaction {
 	set presentation_type [lindex $question 3]
 
 	set response_value [string trim $response_to_question($question_id)]
+
+	ns_log Notice "process-response: id=$question_id, text=$question_text, data_type=$abstract_data_type, prz=$presentation_type, value=$response_value"
 
 	switch -- $abstract_data_type {
 	    "choice" {
@@ -249,8 +250,7 @@ db_transaction {
 		       insert into survsimp_question_responses (response_id, question_id, boolean_answer)
 		       values (:response_id, :question_id, :response_value)"
 	    }
-	    "number" {}
-	    "integer" {
+	    "number" - "integer" {
                 if { [empty_string_p $response_value] } {
                     set response_value [db_null]
                 } 
@@ -375,17 +375,11 @@ db_transaction {
 #
 # Survey type-specific stuff
 #
-
 set type [db_string get_type "select type from survsimp_surveys where survey_id = :survey_id"]
-
 switch $type {
-    
+   
     "general" {
-	      
 	set survey_name [db_string survsimp_name_from_id "select name from survsimp_surveys where survey_id = :survey_id" ]
-
-	db_release_unused_handles
-
 	if {[info exists return_url] && ![empty_string_p $return_url]} {
 	    ad_returnredirect "$return_url"
             ad_script_abort
@@ -395,7 +389,6 @@ switch $type {
     }
 
     "scored" {
-
         db_foreach get_score "select variable_name, sum(score) as sum_of_scores
                            from survsimp_choice_scores, survsimp_question_responses, survsimp_variables
                            where survsimp_choice_scores.choice_id = survsimp_question_responses.choice_id
@@ -408,7 +401,6 @@ switch $type {
         set logic [db_string get_logic "select logic from survsimp_logic, survsimp_logic_surveys_map
           where survsimp_logic.logic_id = survsimp_logic_surveys_map.logic_id
           and survey_id = :survey_id"]
-
 
 	if {[info exists return_url] && ![empty_string_p $return_url]} {
             db_release_unused_handles

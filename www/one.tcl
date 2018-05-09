@@ -1,4 +1,3 @@
-
 # Is this page called as part of a workflow panel?
 if {![info exists task]} {
 
