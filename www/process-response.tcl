@@ -372,6 +372,8 @@ db_transaction {
     return
 }
 
+im_audit -object_id $response_id -object_type "survsimp_response" -action after_create
+
 #
 # Survey type-specific stuff
 #
