@@ -165,16 +165,16 @@ if {"" != $task_id} {
 db_transaction {
 
     if {$create_response_p} {
-    db_exec_plsql create_response {
-	begin
+	db_exec_plsql create_response {
+	    begin
 	    :1 := survsimp_response.new (
-		response_id => :response_id,
-		survey_id => :survey_id,		
-		context_id => :survey_id,
-		creation_user => :user_id
-	    );
-	end;
-    }
+					 response_id => :response_id,
+					 survey_id => :survey_id,		
+					 context_id => :survey_id,
+					 creation_user => :user_id
+					 );
+	    end;
+	}
     }
    
     db_dml update_oid "
@@ -372,7 +372,13 @@ db_transaction {
     return
 }
 
-im_audit -object_id $response_id -object_type "survsimp_response" -action after_create
+
+
+if {$create_response_p} {
+    im_audit -object_id $response_id -object_type "survsimp_response" -action after_create
+} else {
+    im_audit -object_id $response_id -object_type "survsimp_response" -action after_update
+}
 
 #
 # Survey type-specific stuff
