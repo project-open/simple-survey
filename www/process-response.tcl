@@ -127,6 +127,7 @@ ad_page_contract {
     survey_name:onerow
 }
 
+
 ad_require_permission $survey_id survsimp_take_survey
 
 set user_id [ad_verify_and_get_user_id]

@@ -16,7 +16,7 @@
 	</p>
 </if>
 
-<form enctype=multipart/form-data method="post" action="@package_url;noquote@/process-response">
+<form enctype=multipart/form-data method="POST" action="@package_url;noquote@/process-response">
 <%= [export_vars -form {survey_id response_id related_object_id related_context_id task_id return_url}] %>
 <table border="0" cellpadding="0" cellspacing="0" width="100%">
     <tr>

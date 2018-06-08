@@ -142,6 +142,13 @@ if {$single_response_p == "t" && $single_editable_p == "f"} {
 
 if {"" != $response_id} {
     set edit_previous_response_p "t"
+
+    # Get the response data in order to show correctly the related_object_id in the .adp
+    db_1row response_info "
+	select	*
+	from	survsimp_responses
+	where	response_id = :response_id	      
+    "
 }
 
 
