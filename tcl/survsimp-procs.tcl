@@ -150,7 +150,7 @@ ad_proc -public survsimp_question_display {
 		set user_value $date_answer
 	    }
 	    
-	    append html "[ad_dateentrywidget $element_name $user_value]" 
+	    append html "[im_dateentrywidget $element_name $user_value]" 
 	}
 	"select" {
 	    if { $abstract_data_type == "boolean" } {
