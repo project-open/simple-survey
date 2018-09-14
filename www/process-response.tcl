@@ -374,12 +374,20 @@ db_transaction {
 }
 
 
-
+# Audit
+# Create direct audits on the object, but also create
+# "after_update" events on the related objects 
+# (typically project + user), so you can write rules there.
+#
 if {$create_response_p} {
     im_audit -object_id $response_id -object_type "survsimp_response" -action after_create
 } else {
     im_audit -object_id $response_id -object_type "survsimp_response" -action after_update
 }
+im_audit -object_id $related_object_id -action after_update
+im_audit -object_id $related_context_id -action after_update
+
+
 
 #
 # Survey type-specific stuff
