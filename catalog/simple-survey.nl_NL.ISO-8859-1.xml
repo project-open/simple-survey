@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<message_catalog package_key="simple-survey" locale="nl_NL" charset="ISO-8859-1">
+
+  <msg key="Fill_out_survey">Invoegen van de nodige informatie om de offerte te voltooien</msg>
+</message_catalog>
