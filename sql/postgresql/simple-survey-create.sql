@@ -41,7 +41,7 @@ SELECT acs_object_type__create_type (
 	'survsimp_responses','response_id',null,'f',null,null);
 SELECT acs_rel_type__create_type (
 	'user_blob_response_rel','User Blob Response','User Blob Responses','relationship',
-	'survsimp_question_responses','response_id','user_blob_response_rel','user','user',1,1,'content_item',null,0,1);
+	'survsimp_question_responses','response_id','user_blob_response_rel','user','user',1,1,'content_item',null,0,1,true);
 
 
 create table survsimp_surveys (
